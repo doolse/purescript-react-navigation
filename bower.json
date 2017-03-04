@@ -1,0 +1,26 @@
+{
+  "name": "purescript-react-navigation",
+  "authors": [
+    "Jens Krause <email@jkrause.io>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output",
+    "examples"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sectore/purescript-react-navigation.git"
+  },
+  "dependencies": {
+    "purescript-prelude": "^2.5.0",
+    "purescript-console": "^2.0.0",
+    "purescript-reactnative": "^2.42.0"
+  },
+  "devDependencies": {
+    "purescript-psci-support": "^2.0.0"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "purescript-react-navigation",
+  "version": "0.0.1",
+  "description": "Purescript binding for React Navigation",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sectore/purescript-react-navigation.git"
+  },
+  "keywords": [
+    "Purescript",
+    "React Native",
+    "React Navigation"
+  ],
+  "author": "Jens Krause <email@jkrause.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sectore/purescript-react-navigation/issues"
+  },
+  "homepage": "https://github.com/sectore/purescript-react-navigation#readme"
+}
