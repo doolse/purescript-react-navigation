@@ -1,0 +1,21 @@
+{
+  "name": "HelloMobileNavigation",
+  "description": "",
+  "main": "Main.purs",
+  "authors": [
+    "Jens Krause <email@jkrause.io>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "purescript-react-navigation": "../.."
+  }
+}
