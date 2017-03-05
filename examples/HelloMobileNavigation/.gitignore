@@ -52,8 +52,8 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
 
-/bower_components/
-/.pulp-cache/
-/output/
-/.psc*
-/.psa*
+bower_components/
+.pulp-cache/
+output/
+.psc*
+.psa*

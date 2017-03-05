@@ -15,7 +15,11 @@
     "test",
     "tests"
   ],
+  "devDependencies": {
+    "purescript-psci-support": "^2.0.0"
+  },
   "dependencies": {
-    "purescript-react-navigation": "../.."
+    "purescript-react-navigation": "../../",
+    "purescript-dispatcher-react": "^1.0.0"
   }
 }
