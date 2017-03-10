@@ -10,7 +10,7 @@ _coming soon_
 
 ## Examples
 
-- [`HelloMobileNavigation`](./exmples/HelloMobileNavigation)
+- [`HelloMobileNavigation`](./tree/master/examples/HelloMobileNavigation)
 
 
 ## License
