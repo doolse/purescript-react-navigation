@@ -1,42 +1,47 @@
 module ReactNavigation where
 
+import Prelude
 import Data.Function.Uncurried (Fn0)
 import Data.Maybe (Maybe)
 import Data.Nullable (Nullable, toNullable)
-import React (ReactElement, ReactClass)
-import ReactNative.PropTypes (class NoneEnum)
+import React (ReactClass, ReactElement, ReactThis)
+import ReactNative.PropTypes (class NoneEnum, Prop)
 import ReactNative.PropTypes.Color (Color)
 import ReactNative.Styles (Styles)
-import Unsafe.Coerce (unsafeCoerce)
+import ReactNative.Unsafe.ApplyProps (unsafeApplyProps)
 
 -- | StackNavigator https://reactnavigation.org/docs/navigators/stack#API-Definition
 
+newtype Navigation = Navigation (forall props state. ReactThis props state)
+
 foreign import stackNavigatorImpl :: forall r c props. { | r } -> { | c } -> ReactClass props
 
--- | Create a StackNavigator with a given RouteConfig and StackNavigatorConfig
+-- | Create a StackNavigator with a given map of RouteConfigs and StackNavigatorConfigs
 stackNavigator :: forall r c props. { | r } -> { | c } -> ReactClass props
 stackNavigator = stackNavigatorImpl
 
--- | Create a StackNavigator with a given RouteConfig
+-- | Create a StackNavigator with a given map of RouteConfigs
 stackNavigator' :: forall r props. { | r } -> ReactClass props
 stackNavigator' routeConfig = stackNavigatorImpl routeConfig {}
 
-foreign import applyNavigationOptionsImpl :: forall props o. ReactClass props -> o -> ReactClass props
+foreign import applyNavigationOptionsImpl :: forall o p. ReactClass {navigation :: Navigation | p}
+  -> o -> ReactClass {navigation :: Navigation | p}
 
 -- | Applies `ScreenNavigationOptions` to a screen
-applyNavigationOptions :: forall props o. ReactClass props -> o -> ReactClass props
-applyNavigationOptions = applyNavigationOptionsImpl
+applyNavigationOptions :: forall p. ReactClass { navigation :: Navigation | p }
+  -> Prop ScreenNavigationOptions -> ReactClass { navigation :: Navigation | p }
+applyNavigationOptions screen options = applyNavigationOptionsImpl screen $ unsafeApplyProps {} options
 
 -- | RouteConfig https://reactnavigation.org/docs/navigators/stack#RouteConfigs
 type RouteConfig =
-    { screen :: forall props. ReactClass props
-    , getScreen :: forall props. Fn0 (ReactClass props)
-    , path :: String
-    , navigationOptions :: ScreenNavigationOptions
-    }
+  { screen :: forall p. ReactClass { navigation :: Navigation | p }
+  , getScreen :: forall p. Fn0 (ReactClass { navigation :: Navigation | p })
+  , path :: String
+  , navigationOptions :: ScreenNavigationOptions
+  }
 
-mkRouteConfig :: forall c. { screen :: ReactElement | c } -> RouteConfig
-mkRouteConfig = unsafeCoerce
+mkRouteConfig :: Prop (RouteConfig) -> RouteConfig
+mkRouteConfig config = unsafeApplyProps {} config
 
 -- | ScreenNavigationOptions https://reactnavigation.org/docs/navigators/stack#Screen-Navigation-Options
 type ScreenNavigationOptions =
