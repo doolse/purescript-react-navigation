@@ -1,30 +1,36 @@
 module ReactNavigation where
 
+import Data.Function.Uncurried (Fn0)
 import Data.Maybe (Maybe)
 import Data.Nullable (Nullable, toNullable)
-import Data.Function.Uncurried (Fn2, runFn2)
-import Unsafe.Coerce (unsafeCoerce)
-import React (ReactElement)
-import ReactNative.Styles (Styles)
-import ReactNative.PropTypes.Color (Color)
+import React (ReactElement, ReactClass)
 import ReactNative.PropTypes (class NoneEnum)
+import ReactNative.PropTypes.Color (Color)
+import ReactNative.Styles (Styles)
+import Unsafe.Coerce (unsafeCoerce)
 
 -- | StackNavigator https://reactnavigation.org/docs/navigators/stack#API-Definition
 
-foreign import stackNavigatorImpl :: forall r c. { | r } -> { | c } -> ReactElement
+foreign import stackNavigatorImpl :: forall r c props. { | r } -> { | c } -> ReactClass props
+
+-- | Create a StackNavigator with a given RouteConfig and StackNavigatorConfig
+stackNavigator :: forall r c props. { | r } -> { | c } -> ReactClass props
+stackNavigator = stackNavigatorImpl
 
 -- | Create a StackNavigator with a given RouteConfig
-stackNavigator :: forall r. { | r } -> ReactElement
-stackNavigator routeConfig = stackNavigatorImpl routeConfig {}
+stackNavigator' :: forall r props. { | r } -> ReactClass props
+stackNavigator' routeConfig = stackNavigatorImpl routeConfig {}
 
-  -- | Create a StackNavigator with a given RouteConfig and StackNavigatorConfig
-stackNavigator' :: forall r c. { | r } -> { | c } -> ReactElement
-stackNavigator' routeConfigs stackNavConfig = stackNavigatorImpl routeConfigs stackNavConfig
+foreign import applyNavigationOptionsImpl :: forall props o. ReactClass props -> o -> ReactClass props
 
+-- | Applies `ScreenNavigationOptions` to a screen
+applyNavigationOptions :: forall props o. ReactClass props -> o -> ReactClass props
+applyNavigationOptions = applyNavigationOptionsImpl
 
 -- | RouteConfig https://reactnavigation.org/docs/navigators/stack#RouteConfigs
 type RouteConfig =
-    { screen :: ReactElement
+    { screen :: forall props. ReactClass props
+    , getScreen :: forall props. Fn0 (ReactClass props)
     , path :: String
     , navigationOptions :: ScreenNavigationOptions
     }
