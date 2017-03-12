@@ -1,8 +1,6 @@
-# _WIP_
+# _WIP_ HelloMobileNavigation
 
-# HelloMobileNavigation
-
-PureScript port of [`Hello Mobile Navigation`](https://reactnavigation.org/docs/intro/#Hello-Mobile-Navigation) by using [`purescript-reactnative`](https://github.com/doolse/purescript-reactnative) and [`purescript-react-navigation`](../../).
+PureScript example of [`Hello Mobile Navigation` tutorial](https://reactnavigation.org/docs/intro/#Hello-Mobile-Navigation) powered by [`purescript-reactnative`](https://github.com/doolse/purescript-reactnative) and [`purescript-react-navigation`](../../../../).
 
 ## Running on iOS
 
@@ -10,10 +8,10 @@ PureScript port of [`Hello Mobile Navigation`](https://reactnavigation.org/docs/
 yarn install
 yarn build:ios
 yarn start
-# run simulator
+# open in XCode to build and run w/ simulator
 open ./ios/HelloMobileNavigation.xcodeproj/
 ```
 
 ## Running on Android
 
-_Android not supported yet. Anyone?_
+_Example is not ready to run with Android, but it could be of course. Anyone?_
