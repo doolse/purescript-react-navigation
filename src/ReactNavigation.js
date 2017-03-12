@@ -13,8 +13,8 @@ exports.applyNavigationOptionsImpl = function (screen) {
   }
 }
 
-exports.navigateImpl = function(_this) {
-  return function(path) {
+exports.navigateImpl = function(_this, path) {
+  return function() {
     _this.navigate(path);
   }
 }

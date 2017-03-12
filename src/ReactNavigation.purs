@@ -2,7 +2,7 @@ module ReactNavigation where
 
 import Prelude
 import Control.Monad.Eff (Eff)
-import Data.Function.Uncurried (Fn0)
+import Data.Function.Uncurried (Fn0, Fn2, runFn2)
 import Data.Maybe (Maybe)
 import Data.Nullable (Nullable, toNullable)
 import React (ReactClass, ReactElement, ReactThis)
@@ -106,7 +106,7 @@ stackNavigatorConfigHeaderMode =
   , none: StackNavigatorConfigHeaderMode "none"
   }
 
-foreign import navigateImpl :: forall eff. Navigation -> String -> Eff (nav :: NAVIGATION | eff) Unit
+foreign import navigateImpl :: forall eff. Fn2 Navigation String (Eff (nav :: NAVIGATION | eff) Unit)
 
 navigate :: forall eff. Navigation -> String -> Eff (nav :: NAVIGATION | eff) Unit
-navigate = navigateImpl
+navigate = runFn2 navigateImpl
