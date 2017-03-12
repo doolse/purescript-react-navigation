@@ -17,23 +17,23 @@ foreign import data NAVIGATION :: !
 
 newtype Navigation = Navigation (forall props state. ReactThis props state)
 
-foreign import stackNavigatorImpl :: forall r c props. { | r } -> { | c } -> ReactClass props
+foreign import stackNavigatorImpl :: forall r c props. Fn2 { | r } { | c } (ReactClass props)
 
 -- | Create a StackNavigator with a given map of RouteConfigs and StackNavigatorConfigs
 stackNavigator :: forall r c props. { | r } -> { | c } -> ReactClass props
-stackNavigator = stackNavigatorImpl
+stackNavigator = runFn2 stackNavigatorImpl
 
 -- | Create a StackNavigator with a given map of RouteConfigs
 stackNavigator' :: forall r props. { | r } -> ReactClass props
-stackNavigator' routeConfig = stackNavigatorImpl routeConfig {}
+stackNavigator' routeConfig = runFn2 stackNavigatorImpl routeConfig {}
 
-foreign import applyNavigationOptionsImpl :: forall o p. ReactClass {navigation :: Navigation | p}
-  -> o -> ReactClass {navigation :: Navigation | p}
+foreign import applyNavigationOptionsImpl :: forall o p. Fn2 (ReactClass {navigation :: Navigation | p})
+  o (ReactClass {navigation :: Navigation | p})
 
 -- | Applies `ScreenNavigationOptions` to a screen
 applyNavigationOptions :: forall p. ReactClass { navigation :: Navigation | p }
   -> Prop ScreenNavigationOptions -> ReactClass { navigation :: Navigation | p }
-applyNavigationOptions screen options = applyNavigationOptionsImpl screen $ unsafeApplyProps {} options
+applyNavigationOptions screen options = runFn2 applyNavigationOptionsImpl screen $ unsafeApplyProps {} options
 
 -- | RouteConfig https://reactnavigation.org/docs/navigators/stack#RouteConfigs
 type RouteConfig =
