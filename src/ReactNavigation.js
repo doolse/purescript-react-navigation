@@ -9,8 +9,15 @@ exports.applyNavigationOptionsImpl = function (screen, options) {
   return screen;
 }
 
-exports.navigateImpl = function(_this, path) {
+exports.navigateImpl = function(_this, path, params) {
   return function() {
-    _this.navigate(path);
+    const p = params || {};
+    _this.navigate(path, params);
   }
+}
+
+exports.getParamsImpl = function(_this) {
+  return function() {
+    return _this.state.params;
+  };
 }
