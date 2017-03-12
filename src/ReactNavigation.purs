@@ -1,6 +1,7 @@
 module ReactNavigation where
 
 import Prelude
+import Control.Monad.Eff (Eff)
 import Data.Function.Uncurried (Fn0)
 import Data.Maybe (Maybe)
 import Data.Nullable (Nullable, toNullable)
@@ -11,6 +12,8 @@ import ReactNative.Styles (Styles)
 import ReactNative.Unsafe.ApplyProps (unsafeApplyProps)
 
 -- | StackNavigator https://reactnavigation.org/docs/navigators/stack#API-Definition
+
+foreign import data NAVIGATION :: !
 
 newtype Navigation = Navigation (forall props state. ReactThis props state)
 
@@ -102,3 +105,8 @@ stackNavigatorConfigHeaderMode =
   , screen: StackNavigatorConfigHeaderMode "screen"
   , none: StackNavigatorConfigHeaderMode "none"
   }
+
+foreign import navigateImpl :: forall eff. Navigation -> String -> Eff (nav :: NAVIGATION | eff) Unit
+
+navigate :: forall eff. Navigation -> String -> Eff (nav :: NAVIGATION | eff) Unit
+navigate = navigateImpl

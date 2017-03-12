@@ -12,3 +12,9 @@ exports.applyNavigationOptionsImpl = function (screen) {
     return screen;
   }
 }
+
+exports.navigateImpl = function(_this) {
+  return function(path) {
+    _this.navigate(path);
+  }
+}
