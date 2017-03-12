@@ -2,22 +2,29 @@ module Main.Ios where
 
 import Prelude
 import Control.Monad.Eff (Eff)
-import Data.Function.Eff (mkEffFn1)
+import Control.Monad.Eff.Class (liftEff)
+import Dispatcher (DispatchEffFn(..), effEval)
+import Dispatcher.React (createComponent, getProps)
 import React (ReactClass, createClass, spec)
 import ReactNative.API (REGISTER, registerComponent)
 import ReactNative.Components.Button (button)
 import ReactNative.Components.Text (text_)
 import ReactNative.Components.View (view_)
-import ReactNavigation (Navigation, RouteConfig, applyNavigationOptions, mkRouteConfig, stackNavigator')
+import ReactNavigation (Navigation, RouteConfig, applyNavigationOptions, mkRouteConfig, navigate, stackNavigator')
+
+data Action = NavigateTo
 
 homeScreen :: forall p. ReactClass { navigation :: Navigation | p }
-homeScreen = createClass $ spec unit \_ ->
-  pure $ view_
-          [ text_ "Hello, Chat App!"
-          , button "Chat with Lucy" clickHandler ]
+homeScreen = createComponent unit render (effEval eval)
   where
-    -- TODO: Add clickHandler
-    clickHandler = mkEffFn1 \_ -> pure unit
+    render _ (DispatchEffFn d) =
+      view_
+        [ text_ "Hello, Chat App!"
+        , button "Chat with Lucy" $ d \_ -> NavigateTo
+        ]
+    eval NavigateTo = do
+      {navigation} <- getProps
+      liftEff $ navigate navigation "chat"
 
 chatScreen :: forall p. ReactClass { navigation :: Navigation | p }
 chatScreen = createClass $ spec unit \_ ->
