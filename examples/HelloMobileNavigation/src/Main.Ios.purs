@@ -12,7 +12,7 @@ import ReactNative.Components.Text (text_)
 import ReactNative.Components.View (view_)
 import ReactNavigation (Navigation, RouteConfig, applyNavigationOptions, mkRouteConfig, navigate, stackNavigator')
 
-data Action = NavigateTo
+data Action = Navigate String
 
 homeScreen :: forall p. ReactClass { navigation :: Navigation | p }
 homeScreen = createComponent unit render (effEval eval)
@@ -20,11 +20,11 @@ homeScreen = createComponent unit render (effEval eval)
     render _ (DispatchEffFn d) =
       view_
         [ text_ "Hello, Chat App!"
-        , button "Chat with Lucy" $ d \_ -> NavigateTo
+        , button "Chat with Lucy" $ d \_ -> Navigate "chat"
         ]
-    eval NavigateTo = do
+    eval (Navigate target) = do
       {navigation} <- getProps
-      liftEff $ navigate navigation "chat"
+      liftEff $ navigate navigation target
 
 chatScreen :: forall p. ReactClass { navigation :: Navigation | p }
 chatScreen = createClass $ spec unit \_ ->
